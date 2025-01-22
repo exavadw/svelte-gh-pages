@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist/ .svelte-kit/ node_modules/",
-    "deploy": "npm run clean && npm install && npm run build && cp -r public/files dist/ && echo \"henrybaror.com\" > dist/CNAME && touch dist/.nojekyll && gh-pages -d dist"
+    "bd": "npm run clean && npm install && npm run build && npm run deploy",
+    "deploy": "echo \"henrybaror.com\" > dist/CNAME && touch dist/.nojekyll && gh-pages -d dist"
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.0.0",

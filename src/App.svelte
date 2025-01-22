@@ -1,7 +1,4 @@
 <script>
-  import ChubboFont from '$lib/fonts/Chubbo-Bold.otf';
-  import SupremeFont from '$lib/fonts/Supreme-Regular.otf';
-
   const socialLinks = {
     github: "https://github.com/exavadw",
     instagram: "https://www.instagram.com/henry.baror/",
@@ -58,10 +55,10 @@
 
   const education = [
     {
-      year: "September 2021 - June 2025",
+      year: "September 2021 - Present",
       title: "University of California, Irvine",
       location: "Irvine, CA",
-      description: "• B.S. Software Engineering"
+      description: "• B.S. Software Engineering Expected Graduation: June 2025"
     }
   ];
 
@@ -96,18 +93,16 @@
 <style>
   @font-face {
     font-family: 'Chubbo';
-    src: url($lib/fonts/Chubbo-Bold.otf) format('opentype');
+    src: url('./fonts/Chubbo-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
-    font-display: swap;
   }
 
   @font-face {
     font-family: 'Supreme';
-    src: url($lib/fonts/Supreme-Regular.otf) format('opentype');
+    src: url('./fonts/Supreme-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
   }
 
   :global(body) {
