@@ -1,6 +1,7 @@
 {
   "name": "svelte-gh-pages",
   "private": true,
+  "homepage": "https://henrybaror.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
