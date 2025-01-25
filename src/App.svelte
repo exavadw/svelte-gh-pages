@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   const socialLinks = {
     github: "https://github.com/exavadw",
     instagram: "https://www.instagram.com/henry.baror/",
@@ -14,24 +16,24 @@
       image: "/svelte-gh-pages/assets/project1.jpg",
       color: "#3d3d4d",
       link: "https://github.com/exavadw/stt-tts",
-      date: "January 2025",
-      description: "Real-time voice transcription and text synthesis using OpenAI's Whisper and Piper"
+      date: "Dec 2024 - Jan 2025",
+      description: "• Implemented a web application using the Svelte framework and Rust back-end to convert speech to text and text to speech.\n• Used piper-rs for text-to-speech and whisper models for speech-to-text."
     },
     {
       title: "Eyewi",
       image: "/svelte-gh-pages/assets/project2.jpg",
       color: "#1a1a1a",
       link: "https://github.com/exavadw/Eyewi",
-      date: "December 2024",
-      description: "Instant Replay Camera for Sports"
+      date: "Nov - Dec 2024",
+      description: "• Created an instant replay application for athletes with Python designed to capture, manage and display videos.\n• Feeds are saved locally or uploaded to Google Drive using the Google Cloud API.\n• Runs on Windows, Mac, and Linux including Raspberry Pi.\n• Currently used at a local business with expansion planned."
     },
     {
       title: "TMGE",
       image: "/svelte-gh-pages/assets/project3.jpg",
       color: "#2c4a3e",
       link: "https://github.com/exavadw/TMGE",
-      date: "March 2024 - May 2024",
-      description: "Java-based game engine supporting multiple tile-matching games with custom UI framework"
+      date: "March - May 2023",
+      description: "• Collaborated with a team of 5 to create an engine for tile-based games, such as Tetris and Bejeweled, in Java.\n• Integrated the game engine into the abstraction layer and authored engine design documentation."
     },
     {
       title: "Perfect Storm",
@@ -39,7 +41,7 @@
       color: "#4d4a1f",
       link: "https://github.com/exavadw/Perfect-Storm-API",
       date: "Aug 2020 - Aug 2021",
-      description: "Source Code for Naruto Storm 4 Mod"
+      description: "• Led a team of 3 programmers to create a mod of Naruto Storm 4 adding new content and fixing bugs.\n• Reverse engineered x86 binary without any source code, using x86 Assembly, and C/C++.\n• Mod received millions of views with international showcase."
     }
   ];
 
@@ -64,30 +66,107 @@
 
   const activities = [
     {
-      year: "2024 - Present",
+      year: "Oct 2024 - Present",
       title: "CA Tricking Demo Team | Performance Coordinator",
       location: "Orange County, CA",
       description: "• Organize performances with a team of martial arts trickers in our local community.\n• Emcee, communicate with event staff, and coordinate on-site so that events run smoothly.\n• Performed for audiences of up to 500: Orange County Japan Fair and Anime Expo Chibi."
     },
     {
-      year: "2018 - Present",
+      year: "Sept 2018 - Present",
       title: "Taekwondo | 3rd Degree Black Belt",
       location: "Ellicott City, MD / Irvine, CA",
       description: "• National Champion | 1st place at National Collegiate Taekwondo Association Nationals for Board Breaking in the Black Belt Division (2024)\n• Taekwondo/Summer Camp Instructor (Sept 2018 - Aug 2022)"
     },
     {
-      year: "2018 - Present",
-      title: "Self-Employed | Computer Sales Specialist",
-      location: "MD, Orange County, CA",
-      description: "• Sell and customize electronic hardware such as computer and video games both online and locally, meeting client needs for gaming, professional, and general use.\n• Provide technical advice to customers, ensuring compatibility and optimal performance of computer parts and components."
-    },
-    {
-      year: "2022 - 2024",
+      year: "Jan 2022 - June 2024",
       title: "UCI Jazz Band | Trombone Section Leader",
       location: "Irvine, CA",
       description: "• Coordinated schedules, led weekly practices, and organized/hosted band-wide social events."
     }
   ];
+
+  // Add new skills section
+  const skills = [
+    {
+      category: "Languages",
+      items: "• C++, Python, Java, Javascript, Typescript, Rust, C, x86 Assembly"
+    },
+    {
+      category: "Tools/Frameworks",
+      items: "• VS Code, Cursor, HTML, CSS, Svelte, Wordpress, DigitalOcean, IDA Pro, Cheat Engine, Turborepo"
+    },
+    {
+      category: "Libraries",
+      items: "• SDL2, Piper-RS, Whisper, Google Cloud API, IMGUI, tkinter"
+    }
+  ];
+
+  let currentSlide = 0;
+  let isMobile = false;
+  let isDragging = false;
+  let startX = 0;
+  let currentX = 0;
+
+  function updateIsMobile() {
+    isMobile = window.innerWidth < 768;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % projects.length;
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + projects.length) % projects.length;
+  }
+
+  function handleTouchStart(e) {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    currentX = startX;
+  }
+  
+  function handleTouchMove(e) {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    e.preventDefault(); // Prevent scrolling while swiping
+  }
+  
+  function handleTouchEnd(e) {
+    if (!isDragging) return;
+    
+    const swipeThreshold = 50;
+    const swipeDistance = currentX - startX;
+    
+    // Only handle as swipe if moved more than threshold
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        prevSlide();
+      } else {
+        nextSlide();
+      }
+      // Prevent click when swiping
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    isDragging = false;
+    startX = 0;
+    currentX = 0;
+  }
+
+  function handleClick(e, link) {
+    // Only open link if not dragging
+    if (!isDragging) {
+      window.open(link, '_blank');
+    }
+    e.preventDefault();
+  }
+
+  onMount(() => {
+    updateIsMobile();
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
+  });
 </script>
 
 <style>
@@ -195,6 +274,10 @@
     margin-top: 0.5rem;
     font-weight: normal;
     opacity: 0.9;
+    white-space: pre-line;
+    text-align: left;
+    width: 100%;
+    padding: 0 1rem;
   }
 
   .experiments {
@@ -252,6 +335,95 @@
     text-decoration: underline;
     opacity: 0.8;
   }
+
+  @media (max-width: 768px) {
+    .projects {
+      display: block;
+      position: relative;
+      height: 300px;
+      margin: 0 auto 4rem auto;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .project-card {
+      position: absolute;
+      width: calc(100% - 2rem);
+      height: calc(100% - 2rem);
+      transition: transform 0.3s ease-in-out;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .project-card.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+
+    .project-card.prev {
+      transform: translateX(-100%);
+    }
+
+    .project-card.next {
+      transform: translateX(100%);
+    }
+
+    .carousel-button {
+      position: absolute;
+      bottom: 1rem;
+      top: auto;
+      transform: none;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 1.5rem;
+      z-index: 2;
+    }
+
+    .carousel-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .carousel-button.prev {
+      left: 10px;
+    }
+
+    .carousel-button.next {
+      right: 10px;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: white;
+    }
+  }
 </style>
 
 <div class="header">
@@ -268,21 +440,55 @@
 </div>
 
 <h2 class="section-title">Work</h2>
-<div class="projects">
-  {#each projects as project}
-    <a 
-      href={project.link}
-      class="project-card" 
-      style="background-color: {project.color}"
-      target="_blank"
-      rel="noopener"
+{#if isMobile}
+  <div class="projects">
+    <div class="carousel-container"
+      on:touchstart={handleTouchStart}
+      on:touchmove={handleTouchMove}
+      on:touchend={handleTouchEnd}
     >
-      <div>{project.title}</div>
-      <div class="project-date">{project.date}</div>
-      <div class="project-description">{project.description}</div>
-    </a>
-  {/each}
-</div>
+      {#each projects as project, i}
+        <a 
+          href={project.link}
+          class="project-card {i === currentSlide ? 'active' : i === (currentSlide - 1 + projects.length) % projects.length ? 'prev' : 'next'}"
+          style="background-color: {project.color}"
+          on:click={(e) => handleClick(e, project.link)}
+          rel="noopener"
+        >
+          <div>{project.title}</div>
+          <div class="project-date">{project.date}</div>
+          <div class="project-description">{project.description}</div>
+        </a>
+      {/each}
+      <button class="carousel-button prev" on:click={prevSlide}>←</button>
+      <button class="carousel-button next" on:click={nextSlide}>→</button>
+    </div>
+    <div class="carousel-dots">
+      {#each projects as _, i}
+        <div 
+          class="dot {i === currentSlide ? 'active' : ''}"
+          on:click={() => currentSlide = i}
+        ></div>
+      {/each}
+    </div>
+  </div>
+{:else}
+  <div class="projects">
+    {#each projects as project}
+      <a 
+        href={project.link}
+        class="project-card" 
+        style="background-color: {project.color}"
+        target="_blank"
+        rel="noopener"
+      >
+        <div>{project.title}</div>
+        <div class="project-date">{project.date}</div>
+        <div class="project-description">{project.description}</div>
+      </a>
+    {/each}
+  </div>
+{/if}
 
 <h2 class="section-title">Professional Experience</h2>
 <div class="experiments">
@@ -309,6 +515,18 @@
         <div class="experiment-title">{edu.title}</div>
         <div class="experience-location">{edu.location}</div>
         <div class="experience-description">{edu.description}</div>
+      </div>
+    </div>
+  {/each}
+</div>
+
+<h2 class="section-title">Skills</h2>
+<div class="experiments">
+  {#each skills as skill}
+    <div class="experiment">
+      <div class="experiment-year">{skill.category}</div>
+      <div class="experiment-content">
+        <div class="experience-description">{skill.items}</div>
       </div>
     </div>
   {/each}
